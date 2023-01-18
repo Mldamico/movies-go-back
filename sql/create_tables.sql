@@ -124,10 +124,6 @@ ALTER TABLE public.users ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
 );
 
 
---
--- Data for Name: genres; Type: TABLE DATA; Schema: public; Owner: -
---
-
 COPY public.genres (id, genre, created_at, updated_at) FROM stdin;
 1   Comedy  2022-09-23 00:00:00 2022-09-23 00:00:00
 2   Sci-Fi  2022-09-23 00:00:00 2022-09-23 00:00:00
@@ -145,9 +141,7 @@ COPY public.genres (id, genre, created_at, updated_at) FROM stdin;
 \.
 
 
---
--- Data for Name: movies; Type: TABLE DATA; Schema: public; Owner: -
---
+
 
 COPY public.movies (id, title, release_date, runtime, mpaa_rating, description, image, created_at, updated_at) FROM stdin;
 1   Highlander  1986-03-07  116 R   He fought his first battle on the Scottish Highlands in 1536. He will fight his greatest battle on the streets of New York City in 1986. His name is Connor MacLeod. He is immortal.    /8Z8dptJEypuLoOQro1WugD855YE.jpg    2022-09-23 00:00:00 2022-09-23 00:00:00
@@ -231,30 +225,20 @@ ALTER TABLE ONLY public.movies
     ADD CONSTRAINT movies_pkey PRIMARY KEY (id);
 
 
---
--- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
 
 ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
 
 
---
--- Name: movies_genres movies_genres_genre_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
+
 
 ALTER TABLE ONLY public.movies_genres
     ADD CONSTRAINT movies_genres_genre_id_fkey FOREIGN KEY (genre_id) REFERENCES public.genres(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
---
--- Name: movies_genres movies_genres_movie_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
+
 
 ALTER TABLE ONLY public.movies_genres
     ADD CONSTRAINT movies_genres_movie_id_fkey FOREIGN KEY (movie_id) REFERENCES public.movies(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
---
--- PostgreSQL database dump complete
---
