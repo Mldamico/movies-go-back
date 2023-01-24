@@ -47,6 +47,18 @@ func (app *application) AllMovies(w http.ResponseWriter, r *http.Request) {
 
 func (app *application) authenticate(w http.ResponseWriter, r *http.Request) {
 
+	var requestPayload struct {
+		Email    string `json:"email"`
+		Password string `json:"password"`
+	}
+
+	err := app.readJSON(w, r, &requestPayload)
+
+	if err != nil {
+		app.errorJSON(w, err, http.StatusBadRequest)
+		return
+	}
+
 	u := jwtUser{
 		ID:        1,
 		FirstName: "Admin",
