@@ -18,6 +18,7 @@ type User struct {
 }
 
 func (u *User) PasswordMatches(plainText string) (bool, error) {
+
 	err := bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(plainText))
 
 	if err != nil {
@@ -31,3 +32,5 @@ func (u *User) PasswordMatches(plainText string) (bool, error) {
 	}
 	return true, nil
 }
+
+//sparks, dazzling, akwards, approach, upright, pick up line, pivot out
