@@ -223,3 +223,31 @@ func (m *PostgresDBRepo) GetUserByID(id int) (*models.User, error) {
 	return &user, nil
 
 }
+
+func (m *PostgresDBRepo) AllGenres() ([]*models.Genre, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), dbTimeout)
+	defer cancel()
+	var allGenres []*models.Genre
+	query := `SELECT id, genre, created_at, updated_at FROM genres order by genre`
+	gRows, err := m.DB.QueryContext(ctx, query)
+	if err != nil {
+		return nil, err
+	}
+
+	defer gRows.Close()
+	for gRows.Next() {
+		var g models.Genre
+		err := gRows.Scan(
+			&g.ID,
+			&g.Genre,
+			&g.CreatedAt,
+			&g.UpdatedAt,
+		)
+		if err != nil {
+			return nil, err
+		}
+		allGenres = append(allGenres, &g)
+	}
+
+	return allGenres, err
+}
