@@ -46,7 +46,7 @@ func (m *PostgresDBRepo) OneMovie(id int) (*models.Movie, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), dbTimeout)
 	defer cancel()
 
-	query := `SELECT id, title, release_date runtime, mpaa_rating,
+	query := `SELECT id, title, release_date, runtime, mpaa_rating,
 			description, COALESCE(image, ''), created_at, updated_at FROM movies WHERE id = $1`
 
 	row := m.DB.QueryRowContext(ctx, query, id)
